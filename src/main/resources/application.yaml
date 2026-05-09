@@ -1,3 +1,63 @@
+#spring:
+#  application:
+#    name: BodyMeasurementApplication
+
+server:
+  port: 8080
+  servlet:
+    context-path: /api
+
+# Database
 spring:
-  application:
-    name: BodyMeasurementApplication
+  datasource:
+    url: jdbc:mysql://localhost:3306/body_measurement_db?useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true
+    username: root
+    password: 1234
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
+  # JPA / Hibernate
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: false
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQLDialect
+        format_sql: true
+
+  # File Upload
+  servlet:
+    multipart:
+      max-file-size: 10MB
+      max-request-size: 10MB
+
+
+app:
+  # File Storage
+  file:
+    upload-dir: uploads/images
+    base-url: http://localhost:8080/api/images
+
+#  # JWT
+#  jwt:
+#    secret: your-super-secret-jwt-key-change-this-in-production-minimum-256-bits
+#    expiration: 86400000
+
+  # ============================================================
+  #  GOOGLE GEMINI AI - FREE (No credit card needed!)
+  #  Get API Key here: https://aistudio.google.com/app/apikey
+  #  Free limits: 1500 requests/day
+  # ============================================================
+  gemini:
+    api-key: AIzaSyBHzvegQUyjg0ejG63D6uMkKjC6LIuo3Og
+    model: gemini-3-flash-preview
+
+  # CORS
+  cors:
+    allowed-origins: http://localhost:3000,http://localhost:5173
+
+# Logging
+logging:
+  level:
+    com.bodymeasure: DEBUG
+    org.springframework.security: WARN
