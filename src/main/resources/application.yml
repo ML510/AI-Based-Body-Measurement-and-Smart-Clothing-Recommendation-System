@@ -2,10 +2,10 @@
 #  application:
 #    name: BodyMeasurementApplication
 
-server:
-  port: 8080
-  servlet:
-    context-path: /api
+#server:
+#  port: 8080
+#  servlet:
+#    context-path: /api
 
 spring:
   datasource:
