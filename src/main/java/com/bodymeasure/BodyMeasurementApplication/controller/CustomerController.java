@@ -3,18 +3,23 @@ package com.bodymeasure.BodyMeasurementApplication.controller;
 import com.bodymeasure.BodyMeasurementApplication.model.Customer;
 import com.bodymeasure.BodyMeasurementApplication.service.CustomerService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
-@RestController("/customer")
+@RestController
+@RequestMapping("/customer")
 @RequiredArgsConstructor
+@CrossOrigin
 public class CustomerController {
 
     private final CustomerService customerService;
 
-    @PostMapping("/add")
+    @PostMapping("/save")
     public boolean saveCustomer(@RequestBody Customer customer){
         return customerService.saveCustomer(customer);
+    }
+
+    @GetMapping("/test")
+    public boolean test(){
+        return true;
     }
 }

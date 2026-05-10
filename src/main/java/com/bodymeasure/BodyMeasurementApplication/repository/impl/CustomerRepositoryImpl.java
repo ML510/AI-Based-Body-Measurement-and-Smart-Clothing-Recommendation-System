@@ -8,6 +8,6 @@ import org.springframework.stereotype.Repository;
 public class CustomerRepositoryImpl implements CustomerRepository {
     @Override
     public boolean saveCustomer(Customer customer) {
-        return false;
+        return true;
     }
 }
