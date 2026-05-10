@@ -1,0 +1,21 @@
+CREATE TABLE men_measurement (
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    neck DECIMAL(10,2) NOT NULL,
+    shoulder DECIMAL(10,2) NOT NULL,
+    chest DECIMAL(10,2) NOT NULL,
+    waist DECIMAL(10,2) NOT NULL,
+    full_length DECIMAL(10,2) NOT NULL,
+    sleeve_length DECIMAL(10,2) NOT NULL,
+    armhole DECIMAL(10,2) NOT NULL,
+    hip DECIMAL(10,2) NOT NULL,
+    inseam DECIMAL(10,2) NOT NULL,
+    outseam DECIMAL(10,2) NOT NULL,
+    thigh DECIMAL(10,2) NOT NULL,
+    knee DECIMAL(10,2) NOT NULL,
+    cuff DECIMAL(10,2) NOT NULL,
+    cross_back DECIMAL(10,2) NOT NULL,
+    wrist DECIMAL(10,2) NOT NULL,
+    head_circumference DECIMAL(10,2) NOT NULL,
+    head_height DECIMAL(10,2) NOT NULL,
+    ai_confidence VARCHAR(20) NOT NULL
+);
