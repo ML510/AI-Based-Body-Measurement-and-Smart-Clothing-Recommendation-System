@@ -3,38 +3,18 @@ package com.bodymeasure.BodyMeasurementApplication.controller;
 import com.bodymeasure.BodyMeasurementApplication.model.Customer;
 import com.bodymeasure.BodyMeasurementApplication.service.CustomerService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
 
-import java.util.List;
-
-@RestController
-@RequestMapping("/customer")
+@RestController("/customer")
 @RequiredArgsConstructor
-@CrossOrigin
 public class CustomerController {
 
     private final CustomerService customerService;
 
-    @PostMapping("/save")
+    @PostMapping("/add")
     public boolean saveCustomer(@RequestBody Customer customer){
-        System.out.println(customer);
-        System.out.println("ava neda----------------------------------------------------------");
         return customerService.saveCustomer(customer);
-    }
-
-    @PutMapping("/update")
-    public boolean updateCustomer(@RequestBody Customer customer){
-        return customerService.updateCustomer(customer);
-    }
-
-    @GetMapping("/get-all/{lastId}/{limit}")
-    public List<Customer> getLimitCustomer(@PathVariable Integer lastId, @PathVariable Integer limit){
-        return customerService.getLimitCustomer(lastId,limit);
-    }
-
-
-    @GetMapping("/test")
-    public boolean test(){
-        return true;
     }
 }
