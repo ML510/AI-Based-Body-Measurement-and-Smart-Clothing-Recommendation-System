@@ -5,6 +5,8 @@ import com.bodymeasure.BodyMeasurementApplication.service.CustomerService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/customer")
 @RequiredArgsConstructor
@@ -17,6 +19,17 @@ public class CustomerController {
     public boolean saveCustomer(@RequestBody Customer customer){
         return customerService.saveCustomer(customer);
     }
+
+    @PostMapping("/update")
+    public boolean updateCustomer(@RequestBody Customer customer){
+        return customerService.updateCustomer(customer);
+    }
+
+    @GetMapping("/get-all/{lastId}/{limit}")
+    public List<Customer> getLimitCustomer(@PathVariable Integer lastId, @PathVariable Integer limit){
+        return customerService.getLimitCustomer(lastId,limit);
+    }
+
 
     @GetMapping("/test")
     public boolean test(){
