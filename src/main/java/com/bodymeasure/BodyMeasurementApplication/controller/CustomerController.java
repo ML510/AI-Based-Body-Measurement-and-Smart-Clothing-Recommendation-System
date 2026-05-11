@@ -20,7 +20,7 @@ public class CustomerController {
         return customerService.saveCustomer(customer);
     }
 
-    @PostMapping("/update")
+    @PutMapping("/update")
     public boolean updateCustomer(@RequestBody Customer customer){
         return customerService.updateCustomer(customer);
     }

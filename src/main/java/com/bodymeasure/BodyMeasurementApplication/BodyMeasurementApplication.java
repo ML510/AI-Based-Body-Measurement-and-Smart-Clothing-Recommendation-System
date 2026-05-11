@@ -9,5 +9,4 @@ public class BodyMeasurementApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(BodyMeasurementApplication.class, args);
 	}
-
 }

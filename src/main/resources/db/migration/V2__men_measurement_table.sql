@@ -17,5 +17,6 @@ CREATE TABLE men_measurement (
     wrist DECIMAL(10,2) NOT NULL,
     head_circumference DECIMAL(10,2) NOT NULL,
     head_height DECIMAL(10,2) NOT NULL,
-    ai_confidence VARCHAR(20) NOT NULL
+    ai_confidence VARCHAR(20) NOT NULL,
+    orderId VARCHAR(20)NOT NULL
 );

@@ -45,4 +45,6 @@ public class MenMeasurement {
 
     @Enumerated(EnumType.STRING)
     private AiConfidence aiConfidence = AiConfidence.MEDIUM;
+
+    private String orderId;
 }
