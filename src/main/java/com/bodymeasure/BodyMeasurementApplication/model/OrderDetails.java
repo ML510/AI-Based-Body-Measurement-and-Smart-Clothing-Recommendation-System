@@ -5,6 +5,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.sql.Time;
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.Date;
 import java.util.List;
 
@@ -14,8 +16,8 @@ import java.util.List;
 public class OrderDetails {
 
     private Integer id;
-    private Date date;
-    private Time time;
+    private LocalDate date;
+    private LocalTime time;
     private String description;
     private String gender;
     private Double netTotal;
