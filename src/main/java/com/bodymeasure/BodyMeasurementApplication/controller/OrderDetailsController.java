@@ -17,5 +17,6 @@ public class OrderDetailsController {
     @PostMapping("/save")
     public boolean saveOrderDetails(OrderDetails orderDetails){
         return orderDetailsService.saveOrderDetails(orderDetails);
+
     }
 }
