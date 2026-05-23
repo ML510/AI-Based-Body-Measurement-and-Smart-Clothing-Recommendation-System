@@ -17,6 +17,8 @@ public class CustomerController {
 
     @PostMapping("/save")
     public boolean saveCustomer(@RequestBody Customer customer){
+        System.out.println(customer);
+        System.out.println("ava neda----------------------------------------------------------");
         return customerService.saveCustomer(customer);
     }
 
