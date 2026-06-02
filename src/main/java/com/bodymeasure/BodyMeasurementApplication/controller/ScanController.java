@@ -51,6 +51,12 @@ public class ScanController {
             //Call Gemini AI
             MeasurementResultDTO result = geminiAiService.analyzeMeasurements(base64Image, mediaType, gender, clothingCodes, heightCm);
 
+            if (customerId != null){
+
+                log.info("MesimeniDto", result);
+
+            }
+
             return ResponseEntity.ok(result);
 
         } catch (Exception e) {
