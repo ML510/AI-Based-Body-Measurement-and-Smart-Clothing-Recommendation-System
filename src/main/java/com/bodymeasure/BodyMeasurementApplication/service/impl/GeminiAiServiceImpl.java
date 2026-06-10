@@ -24,19 +24,19 @@ import java.util.Map;
 @RequiredArgsConstructor
 public class GeminiAiServiceImpl implements GeminiAiService {
     @Value("${app.gemini.api-key}")
-    private String geminiApiKey;        // ← application.properties ඉඳලා
+    private String geminiApiKey;
 
     @Value("${app.gemini.model}")
-    private String geminiModel;         // ← gemini-1.5-flash-latest
+    private String geminiModel;
 
-    private final ObjectMapper objectMapper;    // ← JSON parse
-    private final WebClient.Builder webClientBuilder; // ← HTTP calls
+    private final ObjectMapper objectMapper;
+    private final WebClient.Builder webClientBuilder;
 
     // Rate limit වුණොත් try කරන models
     private static final List<String> FALLBACK_MODELS = List.of(
-            "gemini-1.5-flash-latest",
-            "gemini-1.5-flash-8b",
-            "gemini-1.5-pro-latest"
+            "gemini-2.5-flash",
+            "gemini-2.5-pro",
+            "gemini-3.1-flash-lite"
     );
 
 
@@ -67,12 +67,12 @@ public class GeminiAiServiceImpl implements GeminiAiService {
                 return parseGeminiResponse(response, gender);
 
             } catch (WebClientResponseException e) {
-                if (e.getStatusCode().value() == 429) {
-                    log.warn("Rate limited on model {}. Trying next model...", model);
+                int status = e.getStatusCode().value();
+                if (status == 429 || status == 503) {
+                    log.warn("Model {} returned {}. Trying next...", model, status);
                     lastException = e;
-                    // Wait 2 seconds before trying next model
                     try { Thread.sleep(2000); } catch (InterruptedException ie) { Thread.currentThread().interrupt(); }
-                    continue;
+                    continue;  // next model try කරනවා
                 }
                 log.error("Gemini API error on model {}: {}", model, e.getMessage());
                 throw new RuntimeException("AI body scan failed: " + e.getMessage());

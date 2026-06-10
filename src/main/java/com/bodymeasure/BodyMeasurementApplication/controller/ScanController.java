@@ -6,13 +6,12 @@ import com.bodymeasure.BodyMeasurementApplication.service.MenMeasurementService;
 import com.bodymeasure.BodyMeasurementApplication.service.WomenMeasurementService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.Base64;
 import java.util.List;
 import java.util.Map;
@@ -27,44 +26,71 @@ public class ScanController {
     private final MenMeasurementService menMeasurementService;
     private final WomenMeasurementService womenMeasurementService;
 
-
-    @PostMapping("/analyze")
-    public ResponseEntity<?> analyzeScan(@RequestParam("image") MultipartFile image, @RequestParam("gender") String gender, @RequestParam("clothingCodes") List<String> clothingCodes, @RequestParam(value = "customerId", required = false) Long customerId, @RequestParam(value = "heightCm", required = false) Double heightCm){
+    @PostMapping(value = "/analyze", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public ResponseEntity<?> analyzeScan(
+            @RequestPart("image") MultipartFile image,
+            @RequestParam("gender") String gender,
+            @RequestParam("clothingCodes") List<String> clothingCodes,
+            @RequestParam(value = "customerId", required = false) Long customerId,
+            @RequestParam(value = "heightCm", required = false) Double heightCm
+    ) {
         try {
 
-            if (image.isEmpty()) {
-                return ResponseEntity.badRequest().body(Map.of("error", "Image is required"));
+            if (image == null || image.isEmpty()) {
+                return ResponseEntity.badRequest()
+                        .body(Map.of("error", "Image is required"));
             }
 
-            if (!gender.equals("MEN") && !gender.equals("WOMEN")) {
-                return ResponseEntity.badRequest().body(Map.of("error", "Gender must be MEN or WOMEN"));
+            if (gender == null ||
+                    (!"MEN".equalsIgnoreCase(gender) && !"WOMEN".equalsIgnoreCase(gender))) {
+                return ResponseEntity.badRequest()
+                        .body(Map.of("error", "Gender must be MEN or WOMEN"));
             }
 
-            // Convert image to base64
+            if (clothingCodes == null || clothingCodes.isEmpty()) {
+                return ResponseEntity.badRequest()
+                        .body(Map.of("error", "clothingCodes is required"));
+            }
+
             byte[] bytes = image.getBytes();
             String base64Image = Base64.getEncoder().encodeToString(bytes);
-            String mediaType = image.getContentType() != null ? image.getContentType() : "image/jpeg";
 
-            log.info("Analyzing body scan | gender={} | clothingCodes={} | customer={}",
+            String mediaType = (image.getContentType() != null)
+                    ? image.getContentType()
+                    : "image/jpeg";
+
+            log.info("Analyzing scan | gender={} | clothingCodes={} | customerId={}",
                     gender, clothingCodes, customerId);
 
-            //Call Gemini AI
-            MeasurementResultDTO result = geminiAiService.analyzeMeasurements(base64Image, mediaType, gender, clothingCodes, heightCm);
+            MeasurementResultDTO result =
+                    geminiAiService.analyzeMeasurements(
+                            base64Image,
+                            mediaType,
+                            gender.toUpperCase(),
+                            clothingCodes,
+                            heightCm
+                    );
 
-            if (customerId != null){
+            if (customerId != null) {
+                log.info("Customer scan processed | customerId={} | result={}",
+                        customerId, result);
 
-                log.info("MesimeniDto", result);
-
+                // future use: save to DB etc.
+                // measurementService.save(customerId, result);
             }
 
             return ResponseEntity.ok(result);
 
+        } catch (IOException e) {
+            log.error("IO error during scan processing", e);
+            return ResponseEntity.internalServerError()
+                    .body(Map.of("error", "Failed to process image"));
+
         } catch (Exception e) {
-            log.error("Scan analysis error", e);
+            log.error("Unexpected scan analysis error", e);
             return ResponseEntity.internalServerError()
                     .body(Map.of("error", "Scan failed: " + e.getMessage()));
         }
-
     }
 
 
