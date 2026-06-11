@@ -59,11 +59,7 @@ public class GeminiAiServiceImpl implements GeminiAiService {
         for (String model : modelsToTry) {
             try {
                 log.info("Trying Gemini model: {}", model);
-
-                //Get HTTP POST in Gemini And Seen AI response
                 String response = callGemini(model, requestBody);
-
-
                 return parseGeminiResponse(response, gender);
 
             } catch (WebClientResponseException e) {
@@ -71,13 +67,18 @@ public class GeminiAiServiceImpl implements GeminiAiService {
                 if (status == 429 || status == 503) {
                     log.warn("Model {} returned {}. Trying next...", model, status);
                     lastException = e;
-                    try { Thread.sleep(2000); } catch (InterruptedException ie) { Thread.currentThread().interrupt(); }
-                    continue;  // next model try කරනවා
+                    try { Thread.sleep(1000); } catch (InterruptedException ie) { Thread.currentThread().interrupt(); }
+                    continue;
                 }
                 log.error("Gemini API error on model {}: {}", model, e.getMessage());
-                throw new RuntimeException("AI body scan failed: " + e.getMessage());
+                lastException = e;
+
             } catch (Exception e) {
-                log.error("Gemini scan failed on model {}", model, e);
+                if (e instanceof com.fasterxml.jackson.core.JsonProcessingException) {
+                    log.warn("Model {} returned malformed/truncated JSON. Trying next...", model);
+                } else {
+                    log.warn("Model {} failed: {}. Trying next...", model, e.getMessage());
+                }
                 lastException = e;
             }
         }
@@ -130,7 +131,7 @@ public class GeminiAiServiceImpl implements GeminiAiService {
 
         Map<String, Object> generationConfig = new LinkedHashMap<>();
         generationConfig.put("temperature", 0.1);
-        generationConfig.put("maxOutputTokens", 2000);
+        generationConfig.put("maxOutputTokens", 8192);
         generationConfig.put("responseMimeType", "application/json");
 
         Map<String, Object> body = new LinkedHashMap<>();
