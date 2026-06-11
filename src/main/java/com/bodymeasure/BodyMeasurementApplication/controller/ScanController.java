@@ -41,7 +41,6 @@ public class ScanController {
                         .body(Map.of("error", "Image is required"));
             }
 
-
             if (gender == null ||
                     (!"MEN".equalsIgnoreCase(gender) && !"WOMEN".equalsIgnoreCase(gender))) {
                 return ResponseEntity.badRequest()
