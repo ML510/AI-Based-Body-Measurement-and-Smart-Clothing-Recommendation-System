@@ -31,7 +31,6 @@ public class ScanController {
             @RequestPart("image") MultipartFile image,
             @RequestParam("gender") String gender,
             @RequestParam("clothingCodes") List<String> clothingCodes,
-            @RequestParam(value = "customerId", required = false) Long customerId,
             @RequestParam(value = "heightCm", required = false) Double heightCm
     ) {
         try {
@@ -60,8 +59,8 @@ public class ScanController {
                     ? image.getContentType()
                     : "image/jpeg";
 
-            log.info("Analyzing scan | gender={} | clothingCodes={} | customerId={}",
-                    gender, clothingCodes, customerId);
+            log.info("Analyzing scan | gender={} | clothingCodes={}",
+                    gender, clothingCodes);
 
             MeasurementResultDTO result =
                     geminiAiService.analyzeMeasurements(
@@ -71,14 +70,6 @@ public class ScanController {
                             clothingCodes,
                             heightCm
                     );
-
-            if (customerId != null) {
-                log.info("Customer scan processed | customerId={} | result={}",
-                        customerId, result);
-
-                // future use: save to DB etc.
-                // measurementService.save(customerId, result);
-            }
 
             return ResponseEntity.ok(result);
 
