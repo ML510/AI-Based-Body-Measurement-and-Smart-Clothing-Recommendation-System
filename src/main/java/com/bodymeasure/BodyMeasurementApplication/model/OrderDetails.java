@@ -22,5 +22,6 @@ public class OrderDetails {
     private String gender;
     private Double netTotal;
     private String customerId;
+    private String measurementId;
     private List<OrderItemDetails> orderItemDetails;
 }

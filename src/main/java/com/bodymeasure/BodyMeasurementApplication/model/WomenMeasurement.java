@@ -1,6 +1,8 @@
 package com.bodymeasure.BodyMeasurementApplication.model;
 
 import jakarta.persistence.Column;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -62,7 +64,6 @@ public class WomenMeasurement {
 
     private BigDecimal wrist;
 
-    private AiConfidence aiConfidence = AiConfidence.MEDIUM;
-
-    private String orderId;
+    @Enumerated(EnumType.STRING)
+    private AiConfidence aiConfidence;
 }

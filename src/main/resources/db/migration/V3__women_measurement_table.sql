@@ -24,6 +24,5 @@ CREATE TABLE women_measurement (
     under_bust DECIMAL(10,2),
     arm_length DECIMAL(10,2),
     wrist DECIMAL(10,2),
-    ai_confidence VARCHAR(20),
-    order_id VARCHAR(100)
+    ai_confidence VARCHAR(20)
 );

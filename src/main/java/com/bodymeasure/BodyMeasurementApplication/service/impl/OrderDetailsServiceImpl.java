@@ -20,7 +20,7 @@ public class OrderDetailsServiceImpl implements OrderDetailsService {
     public boolean saveOrderDetails(OrderDetails od) {
 
 
-        Order order = new Order(od.getId(), od.getDate(), od.getTime(), od.getDescription(), od.getGender(), od.getNetTotal(), od.getCustomerId());
+        Order order = new Order(od.getId(), od.getDate(), od.getTime(), od.getDescription(), od.getGender(), od.getNetTotal(), od.getCustomerId(), od.getMeasurementId());
         boolean isSave = orderService.saveOrder(order);
         if (isSave){
             return orderItemDetailsService.saveOrderItemDetails(od.getOrderItemDetails());

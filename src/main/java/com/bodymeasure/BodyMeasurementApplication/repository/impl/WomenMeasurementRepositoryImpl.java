@@ -24,8 +24,8 @@ public class WomenMeasurementRepositoryImpl implements WomenMeasurementRepositor
                 "shoulder_to_waist, skirt_length, apex_point, " +
                 "neck_depth_front, neck_depth_back, side_split_height, " +
                 "cross_back, upper_bust, under_bust, arm_length, wrist, " +
-                "ai_confidence, order_id" +
-                ") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+                "ai_confidence" +
+                ") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
         return jdbcTemplate.update(sql,
 
@@ -64,10 +64,7 @@ public class WomenMeasurementRepositoryImpl implements WomenMeasurementRepositor
                 measurement.getWrist(),
 
                 // ---- AI ----
-                measurement.getAiConfidence().name(),
-
-                // ---- Order ----
-                measurement.getOrderId()
+                measurement.getAiConfidence().name()
 
         ) > 0;
     }
@@ -81,7 +78,7 @@ public class WomenMeasurementRepositoryImpl implements WomenMeasurementRepositor
                 shoulder_to_waist = ?, skirt_length = ?, apex_point = ?,
                 neck_depth_front = ?, neck_depth_back = ?, side_split_height = ?,
                 cross_back = ?, upper_bust = ?, under_bust = ?, arm_length = ?, wrist = ?,
-                ai_confidence = ?, order_id = ?
+                ai_confidence = ?
                 WHERE id = ?
                 """;
 
@@ -111,7 +108,6 @@ public class WomenMeasurementRepositoryImpl implements WomenMeasurementRepositor
                 measurement.getArmLength(),
                 measurement.getWrist(),
                 measurement.getAiConfidence().name(),
-                measurement.getOrderId(),
                 measurement.getId()
 
         ) > 0;
@@ -149,8 +145,7 @@ public class WomenMeasurementRepositoryImpl implements WomenMeasurementRepositor
                 rs.getBigDecimal("under_bust"),
                 rs.getBigDecimal("arm_length"),
                 rs.getBigDecimal("wrist"),
-                AiConfidence.valueOf(rs.getString("ai_confidence")),
-                rs.getString("order_id")
+                AiConfidence.valueOf(rs.getString("ai_confidence"))
         ), orderId);
     }
 }

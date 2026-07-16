@@ -21,8 +21,8 @@ public class MenMeasurementRepositoryImpl implements MenMeasurementRepository {
         String sql = "INSERT INTO men_measurement (" +
                 "neck, shoulder, chest, waist, full_length, sleeve_length, armhole, " +
                 "hip, inseam, outseam, thigh, knee, cuff, cross_back, wrist, " +
-                "head_circumference, head_height, ai_confidence, orderId" +
-                ") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+                "head_circumference, head_height, ai_confidence" +
+                ") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
         return jdbcTemplate.update(sql,
 
@@ -48,9 +48,7 @@ public class MenMeasurementRepositoryImpl implements MenMeasurementRepository {
                 measurement.getHeadCircumference(),
                 measurement.getHeadHeight(),
 
-                measurement.getAiConfidence().name(),
-
-                measurement.getOrderId()
+                measurement.getAiConfidence().name()
         )> 0;
     }
 
@@ -59,7 +57,7 @@ public class MenMeasurementRepositoryImpl implements MenMeasurementRepository {
 
         String sql = "UPDATE men_measurement SET neck = ?, shoulder = ?, chest = ?, waist = ?, full_length = ?, sleeve_length = ?, " +
                 "armhole = ?, hip = ?, inseam = ?, outseam = ?, thigh = ?, knee = ?, cuff = ?, cross_back = ?, wrist = ?, head_circumference = ?, " +
-                "head_height = ?, ai_confidence = ?, orderId = ? WHERE id = ?";
+                "head_height = ?, ai_confidence = ? WHERE id = ?";
 
         return jdbcTemplate.update(sql,
                 measurement.getNeck(),
@@ -80,7 +78,6 @@ public class MenMeasurementRepositoryImpl implements MenMeasurementRepository {
                 measurement.getHeadCircumference(),
                 measurement.getHeadHeight(),
                 measurement.getAiConfidence().name(),
-                measurement.getOrderId(),
                 measurement.getId()
         ) > 0;
     }
@@ -118,9 +115,7 @@ public class MenMeasurementRepositoryImpl implements MenMeasurementRepository {
 
                 rs.getBigDecimal("head_height"),
 
-                AiConfidence.valueOf(rs.getString("ai_confidence")),
-
-                rs.getString("orderId")
+                AiConfidence.valueOf(rs.getString("ai_confidence"))
 
         ), id);
     }

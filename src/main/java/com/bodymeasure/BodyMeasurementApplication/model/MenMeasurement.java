@@ -44,7 +44,5 @@ public class MenMeasurement {
     private BigDecimal headHeight;
 
     @Enumerated(EnumType.STRING)
-    private AiConfidence aiConfidence = AiConfidence.MEDIUM;
-
-    private String orderId;
+    private AiConfidence aiConfidence;
 }

@@ -5,5 +5,6 @@ CREATE TABLE orders (
     description VARCHAR(300),
     gender VARCHAR(20),
     net_total DOUBLE,
-    customer_id VARCHAR(20)
+    customer_id VARCHAR(20),
+    measurement_id VARCHAR(20)
 );

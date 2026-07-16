@@ -19,6 +19,7 @@ import java.util.Map;
 @Slf4j
 @RestController
 @RequestMapping("/scan")
+@CrossOrigin(origins = "http://localhost:5173")
 @RequiredArgsConstructor
 public class ScanController {
 

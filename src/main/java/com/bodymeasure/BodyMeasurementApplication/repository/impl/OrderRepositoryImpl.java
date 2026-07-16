@@ -17,8 +17,8 @@ public class OrderRepositoryImpl implements OrderRepository {
     public boolean saveOrder(Order order) {
 
         String sql = "INSERT INTO orders " +
-                "(order_date, order_time, description, gender, net_total, customer_id) " +
-                "VALUES (?, ?, ?, ?, ?, ?)";
+                "(order_date, order_time, description, gender, net_total, customer_id, measurement_id) " +
+                "VALUES (?, ?, ?, ?, ?, ?, ?)";
 
         return jdbcTemplate.update(
                 sql,
@@ -27,7 +27,8 @@ public class OrderRepositoryImpl implements OrderRepository {
                 order.getDescription(),
                 order.getGender(),
                 order.getNetTotal(),
-                order.getCustomerId()
+                order.getCustomerId(),
+                order.getMeasurementId()
         )> 0;
     }
 }

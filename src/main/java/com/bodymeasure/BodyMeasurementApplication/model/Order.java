@@ -21,4 +21,5 @@ public class Order {
     private String gender;
     private Double netTotal;
     private String customerId;
+    private String measurementId;
 }
