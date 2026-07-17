@@ -30,16 +30,13 @@ public class CustomerRepositoryImpl implements CustomerRepository {
     public String searchCustomerByEmail(String email) {
 
         String sql = "SELECT id FROM customer WHERE email = ?";
-
         try {
             Integer id = jdbcTemplate.queryForObject(
                     sql,
                     Integer.class,
                     email
             );
-
             return String.valueOf(id);
-
         } catch (EmptyResultDataAccessException e) {
             return null;
         }
