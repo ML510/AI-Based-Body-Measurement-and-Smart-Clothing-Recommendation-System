@@ -21,6 +21,11 @@ public class CustomerController {
         return customerService.saveCustomer(customer);
     }
 
+    @GetMapping("/search-byEmail")
+    public String searchCustomerByEmail(String email){
+        return customerService.searchCustomerByEmail(email);
+    }
+
     @GetMapping("/test")
     public boolean test(){
         return true;
