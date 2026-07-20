@@ -15,6 +15,8 @@ public class MenMeasurement {
 
     private Integer id;
 
+    private String gender;
+
     // ---- Upper Body (cm) ----
     private BigDecimal neck;
     private BigDecimal shoulder;

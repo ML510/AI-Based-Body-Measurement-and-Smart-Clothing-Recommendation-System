@@ -19,13 +19,13 @@ public class MenMeasurementRepositoryImpl implements MenMeasurementRepository {
     public boolean saveMenMeasurement(MenMeasurement measurement) {
 
         String sql = "INSERT INTO men_measurement (" +
-                "neck, shoulder, chest, waist, full_length, sleeve_length, armhole, " +
+                "gender, neck, shoulder, chest, waist, full_length, sleeve_length, armhole, " +
                 "hip, inseam, outseam, thigh, knee, cuff, cross_back, wrist, " +
                 "head_circumference, head_height, ai_confidence" +
-                ") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+                ") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
         return jdbcTemplate.update(sql,
-
+                measurement.getGender(),
                 measurement.getNeck(),
                 measurement.getShoulder(),
                 measurement.getChest(),
@@ -55,11 +55,12 @@ public class MenMeasurementRepositoryImpl implements MenMeasurementRepository {
     @Override
     public boolean updateMenMeasurement(MenMeasurement measurement) {
 
-        String sql = "UPDATE men_measurement SET neck = ?, shoulder = ?, chest = ?, waist = ?, full_length = ?, sleeve_length = ?, " +
+        String sql = "UPDATE men_measurement SET gender=?, neck = ?, shoulder = ?, chest = ?, waist = ?, full_length = ?, sleeve_length = ?, " +
                 "armhole = ?, hip = ?, inseam = ?, outseam = ?, thigh = ?, knee = ?, cuff = ?, cross_back = ?, wrist = ?, head_circumference = ?, " +
                 "head_height = ?, ai_confidence = ? WHERE id = ?";
 
         return jdbcTemplate.update(sql,
+                measurement.getGender(),
                 measurement.getNeck(),
                 measurement.getShoulder(),
                 measurement.getChest(),
@@ -90,6 +91,7 @@ public class MenMeasurementRepositoryImpl implements MenMeasurementRepository {
         return jdbcTemplate.query(sql, (rs, rowNum) -> new MenMeasurement(
 
                 rs.getInt("id"),
+                rs.getString("gender"),
 
                 rs.getBigDecimal("neck"),
                 rs.getBigDecimal("shoulder"),

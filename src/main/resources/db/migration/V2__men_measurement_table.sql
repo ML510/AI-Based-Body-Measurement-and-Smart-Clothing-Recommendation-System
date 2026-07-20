@@ -1,5 +1,6 @@
 CREATE TABLE men_measurement (
     id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    gender VARCHAR(8) NOT NULL,
     neck DECIMAL(10,2) NOT NULL,
     shoulder DECIMAL(10,2) NOT NULL,
     chest DECIMAL(10,2) NOT NULL,
