@@ -89,6 +89,7 @@ public class MenMeasurementRepositoryImpl implements MenMeasurementRepository {
         String sql = "SELECT * FROM men_measurement WHERE orderId = ?";
 
         return jdbcTemplate.query(sql, (rs, rowNum) -> new MenMeasurement(
+
                 rs.getInt("id"),
                 rs.getString("gender"),
 
