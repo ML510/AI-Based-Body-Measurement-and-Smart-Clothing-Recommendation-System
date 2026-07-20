@@ -19,15 +19,16 @@ public class WomenMeasurementRepositoryImpl implements WomenMeasurementRepositor
     public boolean saveWomenMeasurement(WomenMeasurement measurement) {
 
         String sql = "INSERT INTO women_measurement (" +
-                "shoulder, bust, waist, armhole, sleeve_length, sleeve_opening, full_length, " +
+                "gender, shoulder, bust, waist, armhole, sleeve_length, sleeve_opening, full_length, " +
                 "hip, thigh, inseam, outseam, knee, ankle, " +
                 "shoulder_to_waist, skirt_length, apex_point, " +
                 "neck_depth_front, neck_depth_back, side_split_height, " +
                 "cross_back, upper_bust, under_bust, arm_length, wrist, " +
                 "ai_confidence" +
-                ") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+                ") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
         return jdbcTemplate.update(sql,
+                measurement.getGender(),
 
                 // ---- Upper Body ----
                 measurement.getShoulder(),
@@ -73,7 +74,7 @@ public class WomenMeasurementRepositoryImpl implements WomenMeasurementRepositor
     public boolean updateWomenMeasurement(WomenMeasurement measurement) {
 
         String sql = """
-                UPDATE women_measurement SET shoulder = ?, bust = ?, waist = ?, armhole = ?, sleeve_length = ?, sleeve_opening = ?, full_length = ?,
+                UPDATE women_measurement SET gender=?, shoulder = ?, bust = ?, waist = ?, armhole = ?, sleeve_length = ?, sleeve_opening = ?, full_length = ?,
                 hip = ?, thigh = ?, inseam = ?, outseam = ?, knee = ?, ankle = ?,
                 shoulder_to_waist = ?, skirt_length = ?, apex_point = ?,
                 neck_depth_front = ?, neck_depth_back = ?, side_split_height = ?,
@@ -83,6 +84,7 @@ public class WomenMeasurementRepositoryImpl implements WomenMeasurementRepositor
                 """;
 
         return jdbcTemplate.update(sql,
+                measurement.getGender(),
                 measurement.getShoulder(),
                 measurement.getBust(),
                 measurement.getWaist(),
@@ -121,6 +123,7 @@ public class WomenMeasurementRepositoryImpl implements WomenMeasurementRepositor
         return jdbcTemplate.query(sql, (rs, rowNum) -> new WomenMeasurement(
 
                 rs.getInt("id"),
+                rs.getString("gender"),
                 rs.getBigDecimal("shoulder"),
                 rs.getBigDecimal("bust"),
                 rs.getBigDecimal("waist"),

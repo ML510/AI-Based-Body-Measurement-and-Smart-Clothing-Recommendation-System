@@ -10,6 +10,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/women_measurement")
 @RequiredArgsConstructor
+@CrossOrigin
 public class WomenMeasurementController {
 
     private final WomenMeasurementService womenMeasurementService;

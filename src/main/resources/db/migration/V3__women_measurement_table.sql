@@ -1,5 +1,6 @@
 CREATE TABLE women_measurement (
     id INT PRIMARY KEY AUTO_INCREMENT,
+    gender VARCHAR(8) NOT NULL,
     shoulder DECIMAL(10,2),
     bust DECIMAL(10,2),
     waist DECIMAL(10,2),

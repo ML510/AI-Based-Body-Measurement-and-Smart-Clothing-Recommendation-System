@@ -15,7 +15,7 @@ import java.math.BigDecimal;
 public class WomenMeasurement {
 
     private Integer id;
-
+    private String gender;
     // ---- Upper Body ----
     private BigDecimal shoulder;
     private BigDecimal bust;
